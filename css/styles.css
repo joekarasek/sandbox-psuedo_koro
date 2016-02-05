@@ -1,0 +1,117 @@
+h1, h2, h3, #exitIntroButton {
+  font-family: 'Unkempt', cursive;
+}
+/*index intro screen*/
+#startGameButton {
+  display: none;
+}
+.intro_screen h1 {
+  text-align: center;
+  font-size: 60px;
+  font-weight: bolder;
+}
+.intro_screen {
+  text-align: center;
+}
+.intro_screen img {
+  max-width: 100%;
+  padding: 2%;
+}
+#exitIntroButton {
+  font-size: 45px;
+  padding: 2%;
+  border-radius: 20%;
+
+}
+/*index main game*/
+.game__board {
+  display: none;
+}
+.main_page_header {
+  height: 200px;
+  margin-top: -100px;
+  background-image: url("../img/machi.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main_game_div {
+  float: right;
+  width: 80%;
+}
+.die-pics {
+  float: left;
+  width: 20%;
+}
+.rule_link {
+  float: right;
+  display: none;
+  font: #3366cc;
+  font-family: 'Unkempt', cursive;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+/*scripts append main game */
+.player {
+  padding-left: 2%;
+}
+.player, .card {
+  border: solid black 1px;
+  border-radius: 3px;
+}
+/*player creation page*/
+.player_creation {
+  display: none;
+}
+.player_rules{
+  border: solid #33ccff 10px;
+  font-size: 25px;
+  margin: 10%;
+  padding: 2%;
+}
+.player_rules h2 {
+  text-decoration: underline;
+}
+.well {
+  background:#d6f5f5;
+  color: #003d66;
+}
+/*populate card JS*/
+/*.js__not-owned {
+  opacity: .25;
+}*/
+
+.js__not-rolled {
+  opacity: .1;
+}
+h2 {
+  font-size: 20px;
+}
+
+.card__row img {
+  width: 50px;
+}
+
+.card__row div {
+  text-align: center;
+}
+
+button[disabled] {
+  opacity: 0.1;
+}
+.mainbuttons {
+  margin-left: 20px;
+}
+/*@media (min-width: 760px) {
+  .card__row img {
+    width: 100px;
+  }
+  .game__board {
+    float: left;
+    width: 25%;
+  }
+  .game__players {
+    float: right;
+    width: 75%;
+  }
+}*/
