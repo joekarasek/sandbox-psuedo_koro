@@ -2,6 +2,7 @@
 //     Game Logic
 // ===================================
 
+
 // Landmark Constructors
 // ====================
 function Landmark(landmarkName, landmarkCost) {
@@ -9,7 +10,6 @@ function Landmark(landmarkName, landmarkCost) {
   this.landmarkCost = landmarkCost;
   this.landmarkActive = false;
 }
-
 
 // Card Constructor
 // ================
@@ -24,7 +24,6 @@ function Card(cardKey, cardName, cardColor, cardPayout, cardType, cardCost, card
   this.cardURL = cardURL;
 }
 
-
 // Dice Constructor
 //===================
 function Dice() {
@@ -37,7 +36,6 @@ Dice.prototype.roll = function() {
   this.dieOneImgAddress = "img/" + this.dieOne + ".png";
   this.dieTwoImgAddress = "img/" + this.dieTwo + ".png";
 }
-
 
 // Player Constructor
 //===================
@@ -176,7 +174,6 @@ Player.prototype.refreshUserDisplay = function() {
                         '</div>';
 }
 
-
 // CardBank Constructor
 //=====================
 function CardBank() {
@@ -223,7 +220,6 @@ CardBank.prototype.setStandardBank = function() {
     }
   }
 }
-
 
 // Game Constructor
 //=====================
@@ -294,9 +290,11 @@ Game.prototype.giveGreenPayout = function(diceValue) {
 }
 
 
+
 // ===========================
 //     User Interface
 // ===========================
+
 var addNewPlayerToGame = function(game) {
   if ($('form#playerSetup input').val() === '') {
     alert("You must assign a player name to add a player.");
@@ -339,7 +337,6 @@ var updatePurseDisplays = function(currentGame) {
     count++;
   });
 }
-
 
 $(document).ready(function() {
   var currentGame = new Game();
