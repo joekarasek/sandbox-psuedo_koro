@@ -359,7 +359,8 @@ $(document).ready(function() {
     $('#rollOneDie').prop("disabled", false);
     $('#rollTwoDie').prop("disabled", false);
     $('#confirm-purchase').prop("disabled", false);
-    $('#player0').css("background-color", "#52A5D8");
+    $('.die-pics').show();
+    $('#player0').css("background-color", "#52A5D8").css("opacity","1");
     $('#rollOneDie').focus();
   });
   $('#rollOneDie').click(function() {
@@ -435,9 +436,9 @@ $(document).ready(function() {
     if (currentGame.players[currentGame.activePlayerIndex].purse>50) {
       alert("Congradulations "+currentGame.players[currentGame.activePlayerIndex].playerName+". You've Won the Game!");
     }
-    $('#player'+currentGame.activePlayerIndex).css("background-color", "white");
+    $('#player'+currentGame.activePlayerIndex).css("background-color", "white").css("opacity",".4");
     currentGame.updateActivePlayerIndex();
-    $('#player'+currentGame.activePlayerIndex).css("background-color", "#52A5D8");
+    $('#player'+currentGame.activePlayerIndex).css("background-color", "#52A5D8").css("opacity","1");
     $('#rollOneDie').prop("disabled", false);
     $('#rollTwoDie').prop("disabled", false);
     $('#confirm-purchase').prop("disabled", false);
