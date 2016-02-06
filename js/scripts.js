@@ -53,6 +53,7 @@ function Player(playerName, playerID) {
     new Landmark("Radio Tower", 22)
     ];
   this.playerID = playerID;
+  this.playerNumber = -1; // run .assignPlayerNumber to assign correct value
 }
 Player.prototype.addCard = function(card) {
   if (this.purse-card.cardCost>=0) {
@@ -79,10 +80,10 @@ Player.prototype.landmarkTrue = function(landmark) {
     }
   });
 }
-Player.prototype.requestRedPayout = function(){
+Player.prototype.requestRedPayout = function(diceValue){
   var requestedAmount = 0;
   this.cardStack.forEach(function(card) {
-    if (card.cardColor === "red") {
+    if (card.cardColor === "red" && card.cardKey.indexOf(diceValue) !== -1) {
       requestedAmount += card.cardPayout;
     }
   });
@@ -92,6 +93,8 @@ Player.prototype.giveRedPayout = function(playerToPay, amountToPay) {
   if (this.purse >= amountToPay) {
     this.purse -= amountToPay;
     playerToPay.purse += amountToPay
+    // console.log(this);
+    // console.log(playerToPay);
   } else {
     playerToPay.purse += this.purse;
     this.purse = 0;
@@ -236,28 +239,16 @@ Game.prototype.addPlayer = function(playerName) {
   playerToAdd.assignPlayerNumber(this.players.length+1);
   this.players.push(playerToAdd);
 }
-Game.prototype.updateActivePlayerIndex = function() {
-  // this.players[this.activePlayerIndex].isTurn = false;
-  if (this.activePlayerIndex < this.players.length-1) {
-    this.activePlayerIndex ++;
-  } else {
-    this.activePlayerIndex = 0;
-  }
-  // this.players[this.activePlayerIndex].isTurn = true;
-}
 Game.prototype.canActivePlayerRollTwoDice = function() {
   if (this.players[this.activePlayerIndex].landmarks[0].landmarkActive) {
     return true;
   }
   return false;
 }
-Game.prototype.rollOneDie = function() {
-  this.dice.roll();
-  return this.dice.dieOne;
-}
-Game.prototype.rollTwoDie = function() {
-  this.dice.roll();
-  return this.dice.dieOne + this.dice.dieTwo;
+Game.prototype.giveAllPayout = function(diceValue) {
+  this.giveRedPayout(diceValue);
+  this.giveGreenPayout(diceValue);
+  this.giveBluePayout(diceValue);
 }
 Game.prototype.giveBluePayout = function(diceValue) {
   this.players.forEach(function(player) {
@@ -274,22 +265,49 @@ Game.prototype.giveGreenPayout = function(diceValue) {
   var payOut = 0;
   var multiplier = 0;
   this.players[this.activePlayerIndex].cardStack.forEach(function(card) {
-    if (card.cardMultiplier !== '' && card.cardKey.indexOf(diceValue) !== -1 && card.cardColor === "green") {
-      that.cardStack.forEach(function(card2) {
-        if (card.cardMultiplier === card2.cardType) {
-          multiplier++;
-        }
-      });
-      payOut += (multiplier * card.cardPayout);
-      multiplier = 0;
-    } else if (card.cardKey.indexOf(diceValue) !== -1 && card.cardColor === "green") {
+    // if (card.cardMultiplier !== '' && card.cardKey.indexOf(diceValue) !== -1 && card.cardColor === "green") {
+    //   that.cardStack.forEach(function(card2) {
+    //     if (card.cardMultiplier === card2.cardType) {
+    //       multiplier++;
+    //     }
+    //   });
+    //   payOut += (multiplier * card.cardPayout);
+    //   multiplier = 0;
+    // } else
+    if (card.cardKey.indexOf(diceValue) !== -1 && card.cardColor === "green") {
       payOut += card.cardPayout;
     }
   });
   this.players[this.activePlayerIndex].purse += payOut;
 }
-
-
+Game.prototype.giveRedPayout = function(diceValue) {
+  var activePlayer = this.players[this.activePlayerIndex];
+  this.players.forEach(function(player) {
+    if (player.playerNumber !== activePlayer.playerNumber) {
+      console.log(player);
+      console.log(player.requestRedPayout(diceValue));
+      activePlayer.giveRedPayout(player, player.requestRedPayout(diceValue));
+    }
+  });
+  //This does not run in the correct order
+}
+Game.prototype.rollOneDie = function() {
+  this.dice.roll();
+  return this.dice.dieOne;
+}
+Game.prototype.rollTwoDie = function() {
+  this.dice.roll();
+  return this.dice.dieOne + this.dice.dieTwo;
+}
+Game.prototype.updateActivePlayerIndex = function() {
+  // this.players[this.activePlayerIndex].isTurn = false;
+  if (this.activePlayerIndex < this.players.length-1) {
+    this.activePlayerIndex ++;
+  } else {
+    this.activePlayerIndex = 0;
+  }
+  // this.players[this.activePlayerIndex].isTurn = true;
+}
 
 // ===========================
 //     User Interface
@@ -338,6 +356,7 @@ var updatePurseDisplays = function(currentGame) {
   });
 }
 
+
 $(document).ready(function() {
   var currentGame = new Game();
   $('.intro_screen').click(function() {
@@ -363,11 +382,9 @@ $(document).ready(function() {
     $('#rollOneDie').focus();
   });
   $('#rollOneDie').click(function() {
-    var diceValue = currentGame.rollOneDie();
-    currentGame.giveBluePayout(diceValue);
-    currentGame.giveGreenPayout(diceValue);
+    currentGame.giveAllPayout(currentGame.rollOneDie());
     $('.die-pic1').prop("src", currentGame.dice.dieOneImgAddress);
-    $('.die-pic2').prop("src", "img/0.png");
+    $('.die-pic2').prop("src", "img/0.png").hide();
     updatePurseDisplays(currentGame);
     $('#rollOneDie').prop("disabled", true);
     $('#rollTwoDie').prop("disabled", true);
@@ -376,11 +393,9 @@ $(document).ready(function() {
     $('#purchase-cards').focus();
   });
   $('#rollTwoDie').click(function() {
-    var diceValue = currentGame.rollTwoDie();
-    currentGame.giveBluePayout(diceValue);
-    currentGame.giveGreenPayout(diceValue);
+    currentGame.giveAllPayout(currentGame.rollTwoDie());
     $('.die-pic1').prop("src", currentGame.dice.dieOneImgAddress);
-    $('.die-pic2').prop("src", currentGame.dice.dieTwoImgAddress);
+    $('.die-pic2').prop("src", currentGame.dice.dieTwoImgAddress).show();
     updatePurseDisplays(currentGame);
     $('#rollOneDie').prop("disabled", true);
     $('#rollTwoDie').prop("disabled", true);
