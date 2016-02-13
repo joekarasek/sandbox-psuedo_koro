@@ -50,10 +50,10 @@ function Player(playerName, playerID) {
     ];
   this.purse = 3;
   this.landmarks = [
-    new Landmark("Train Station", 4),
-    new Landmark("Shopping Mall", 10),
-    new Landmark("Amusement Park", 16),
-    new Landmark("Radio Tower", 22)
+    new Landmark("station"),
+    new Landmark("Shopping Mall"),
+    new Landmark("Amusement Park"),
+    new Landmark("Radio Tower")
     ];
   this.playerID = playerID;
   this.playerNumber = -1; // run .assignPlayerNumber to assign correct value
@@ -358,9 +358,10 @@ var updatePurseDisplays = function(currentGame) {
     count++;
   });
 }
-var dieDisplay = function() {
+var dieDisplay = function(currentGame) {
   $('#rollOneDie').prop("disabled", false);
-  if (currentGame.activePlayer[currentGame.activePlayerIndex].landmarks[0] === true ) {
+  console.log(currentGame.players[currentGame.activePlayerIndex].landmarks[0]);
+  if (currentGame.players[currentGame.activePlayerIndex].landmarks[0].landmarkActive === true ) {
     $('#rollTwoDie').prop("disabled", false);
   }
 }
@@ -378,13 +379,11 @@ $(document).ready(function() {
   $('#startGameButton').click(function() {
     hideAndShowDivs(".player_creation", ".game__board");
     hideAndShowDivs(".player_page", ".rule_link");
-    console.log(currentGame);
-    currentGame.players[]
     currentGame.players.forEach(function(player) {
       populatePlayer(player);
     });
     $('button').prop("disabled", true);
-    dieDisplay();
+    dieDisplay(currentGame);
     $('#confirm-purchase').prop("disabled", false);
     $('#player0').css("background-color", "#52A5D8");
     $('#rollOneDie').focus();
@@ -454,6 +453,9 @@ $(document).ready(function() {
     $('input[name="cardRadios"]:checked').prop('checked', false);
     $('#end-turn').focus();
   });
+  $('purchase-landmarks').click(function() {
+    console.log("You clicked the button!");
+  });
   $('#end-turn').click(function() {
     if (currentGame.players[currentGame.activePlayerIndex].purse>50) {
       alert("Congradulations "+currentGame.players[currentGame.activePlayerIndex].playerName+". You've Won the Game!");
@@ -461,7 +463,7 @@ $(document).ready(function() {
     $('#player'+currentGame.activePlayerIndex).css("background-color", "white");
     currentGame.updateActivePlayerIndex();
     $('#player'+currentGame.activePlayerIndex).css("background-color", "#52A5D8");
-    dieDisplay();
+    dieDisplay(currentGame);
     $('#confirm-purchase').prop("disabled", false);
     $('#purchase-cards').prop("disabled", true);
     $('#end-turn').prop("disabled", true);
