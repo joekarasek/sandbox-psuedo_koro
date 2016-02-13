@@ -46,6 +46,26 @@
         </div>
       </div>
     </div>
+    <!-- landmark purchase -->
+    <div class="modal fade" id="landmarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Purchase A Card</h4>
+          </div>
+          <div class="modal-body">
+            <form action="submit" id="purchase-landmarks">
+              <lable><input name="cardRadios" type="radio" value="Wheat Field">Wheat Field   Cost: 1</lable><br>
+              <lable><input name="cardRadios" type="radio" value="Bakery">Bakery   Cost: 1</lable><br>
+              <lable><input name="cardRadios" type="radio" value="Ranch">Ranch   Cost: 1</lable><br>
+              <lable><input name="cardRadios" type="radio" value="Cafe">Cafe   Cost: 2</lable><br>
+              <button type="submit" id="confirm-purchase">Purchase</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- intro screen -->
     <div class="intro_screen">
       <h1>Welcome to Machi Koro!</h1>
@@ -114,7 +134,7 @@
         <button id="rollOneDie">Roll One Die</button><br>
         <button id="rollTwoDie">Roll Tow Dice</button><br>
         <button id="purchase-cards" data-toggle="modal" data-target="#myModal">Purchase a Card</button><br>
-        <button id="purchase-landmarks">Purchase a Landmark</button><br>
+        <button id="button-landmark" data-toggle="modal" data-target="#landmarkModal">Purchase a Landmark</button><br>
         <button id="end-turn">End Turn</button>
       </div>
     </div>

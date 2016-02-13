@@ -396,7 +396,7 @@ $(document).ready(function() {
     $('#rollOneDie').prop("disabled", true);
     $('#rollTwoDie').prop("disabled", true);
     $('#purchase-cards').prop("disabled", false);
-    $('#purchase-landmarks').prop("disabled", false);
+    $('#button-landmark').prop("disabled", false);
     $('#end-turn').prop("disabled", false);
     $('#purchase-cards').focus();
   });
@@ -409,7 +409,7 @@ $(document).ready(function() {
     $('#rollTwoDie').prop("disabled", true);
     $('#purchase-cards').prop("disabled", false);
     $('#end-turn').prop("disabled", false);
-    $('#purchase-landmarks').prop("disabled", false);
+    $('#button-landmark').prop("disabled", false);
     $('#purchase-cards').focus();
   });
   $('#purchase').submit(function(event) {
@@ -456,7 +456,7 @@ $(document).ready(function() {
     $('#end-turn').focus();
   });
   $('#purchase-landmarks').click(function() {
-    console.log("You clicked the button!");
+
   });
   $('#end-turn').click(function() {
     if (currentGame.players[currentGame.activePlayerIndex].purse>50) {
