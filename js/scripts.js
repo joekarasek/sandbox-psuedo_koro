@@ -5,10 +5,13 @@
 
 // Landmark Constructors
 // ====================
-function Landmark(landmarkName, landmarkCost) {
+function Landmark(landmarkName) {
   this.landmarkName = landmarkName;
-  this.landmarkCost = landmarkCost;
   this.landmarkActive = false;
+  if (landmarkName === 'station') {
+    this.canRollTwo = true;
+    this.landmarkCost = 4;
+  }
 }
 
 // Card Constructor
@@ -355,7 +358,12 @@ var updatePurseDisplays = function(currentGame) {
     count++;
   });
 }
-
+var dieDisplay = function() {
+  $('#rollOneDie').prop("disabled", false);
+  if (currentGame.activePlayer[currentGame.activePlayerIndex].landmarks[0] === true ) {
+    $('#rollTwoDie').prop("disabled", false);
+  }
+}
 
 $(document).ready(function() {
   var currentGame = new Game();
@@ -371,12 +379,12 @@ $(document).ready(function() {
     hideAndShowDivs(".player_creation", ".game__board");
     hideAndShowDivs(".player_page", ".rule_link");
     console.log(currentGame);
+    currentGame.players[]
     currentGame.players.forEach(function(player) {
       populatePlayer(player);
     });
     $('button').prop("disabled", true);
-    $('#rollOneDie').prop("disabled", false);
-    $('#rollTwoDie').prop("disabled", false);
+    dieDisplay();
     $('#confirm-purchase').prop("disabled", false);
     $('#player0').css("background-color", "#52A5D8");
     $('#rollOneDie').focus();
@@ -453,8 +461,7 @@ $(document).ready(function() {
     $('#player'+currentGame.activePlayerIndex).css("background-color", "white");
     currentGame.updateActivePlayerIndex();
     $('#player'+currentGame.activePlayerIndex).css("background-color", "#52A5D8");
-    $('#rollOneDie').prop("disabled", false);
-    $('#rollTwoDie').prop("disabled", false);
+    dieDisplay();
     $('#confirm-purchase').prop("disabled", false);
     $('#purchase-cards').prop("disabled", true);
     $('#end-turn').prop("disabled", true);
