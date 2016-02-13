@@ -385,6 +385,7 @@ $(document).ready(function() {
     $('button').prop("disabled", true);
     dieDisplay(currentGame);
     $('#confirm-purchase').prop("disabled", false);
+    $('#confirm-purchase-landmarks').prop("disabled", false);
     $('#player0').css("background-color", "#52A5D8");
     $('#rollOneDie').focus();
   });
@@ -456,7 +457,7 @@ $(document).ready(function() {
     $('#button-landmark').prop("disabled", true);
     $('#end-turn').focus();
   });
-  $('#purchase-landmarks').submit(function() {
+  $('#purchaseLandmarks').submit(function() {
 
   });
   $('#end-turn').click(function() {
@@ -471,6 +472,7 @@ $(document).ready(function() {
     $('#purchase-cards').prop("disabled", true);
     $('#button-landmark').prop("disabled", true);
     $('#end-turn').prop("disabled", true);
+    $('#confirm-purchase-landmarks').prop("disabled", false);
     updatePurseDisplays(currentGame);
     $('#rollOneDie').focus();
   });
