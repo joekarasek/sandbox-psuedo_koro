@@ -457,7 +457,10 @@ $(document).ready(function() {
     $('#button-landmark').prop("disabled", true);
     $('#end-turn').focus();
   });
-  $('#purchaseLandmarks').submit(function() {
+  $('#purchaseLandmarks').submit(function(event) {
+    event.preventDefault();
+    console.log("button works");
+    debugger;
 
   });
   $('#end-turn').click(function() {
